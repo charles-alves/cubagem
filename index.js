@@ -86,12 +86,11 @@ const input = new Input();
 input.subscribe((value) => {
   if (!value) return
   const values = /^(.+?) por (\d+)( por ([\d.]+))?$/.exec(value)
-  let length = values[1].replace(/\D/g, '')
-  console.log(length)
-  if (length.length === 1) {
-    length += '00'
-  }
   if (values !== null) {
+    let length = values[1].replace(/\D/g, '')
+    if (length.length === 1) {
+      length += '00'
+    }
     table.add(new Board(+length, values[2], values[4]));
   }
   input.clear()
