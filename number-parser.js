@@ -4,7 +4,8 @@ NumberParser = {
   parse (number) {
     return number.split(' e ')
       .map(n => numbers[n])
-      .reduce((a, v) => a + v, 0)
+      .filter(n => n !== undefined)
+      .reduce((a, v) => a + v, null)
   }
 }
 

@@ -24,4 +24,11 @@ describe('Testing numbers convertion', function () {
       expect(result).toBe(55)
     })
   });
+
+  describe('Testing values that is not number', function () {
+    it('sould return null to non numeric values', () => {
+      const result = number.parse('não é um número')
+      expect(result).toBeNull()
+    })
+  })
 });
