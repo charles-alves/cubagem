@@ -1,62 +1,62 @@
-const number = require('./number-parser')
+const { NumberParser } = require('./number-parser')
 
 describe('Testing numbers convertion', function () {
-  describe('Testing simple number conversion', function () {
-    it('should convert the number five', () => {
-      const result = number.parse('cinco')
+  describe('Testing simple NumberParser conversion', function () {
+    it('should convert the NumberParser five', () => {
+      const result = NumberParser.parse('cinco')
       expect(result).toBe(5)
     })
 
-    it('should convert the number fifteen', () => {
-      const result = number.parse('quinze')
+    it('should convert the NumberParser fifteen', () => {
+      const result = NumberParser.parse('quinze')
       expect(result).toBe(15)
     })
 
-    it('should convert the number fifty', () => {
-      const result = number.parse('cinquenta')
+    it('should convert the NumberParser fifty', () => {
+      const result = NumberParser.parse('cinquenta')
       expect(result).toBe(50)
     })
   });
 
   describe('Testing complex numbers conversion', function () {
-    it('should convert the number fifty five', () => {
-      const result = number.parse('cinquenta e cinco')
+    it('should convert the NumberParser fifty five', () => {
+      const result = NumberParser.parse('cinquenta e cinco')
       expect(result).toBe(55)
     })
   });
 
-  describe('Testing values that is not number', function () {
+  describe('Testing values that is not NumberParser', function () {
     it('sould return null to non numeric values', () => {
-      const result = number.parse('não é número')
+      const result = NumberParser.parse('não é número')
       expect(result).toBeNull()
     })
   })
 
-  describe('Testing meters description to number', function () {
+  describe('Testing meters description to NumberParser', function () {
     it('should convert meters using the letter e to concatenate', () => {
-      const result = number.parse('3 e 30')
+      const result = NumberParser.parse('3 e 30')
       expect(result).toBe(330)
     })
 
-    it('should ignore non numeric number values', () => {
-      const result = number.parse('3 metros e 10')
+    it('should ignore non numeric NumberParser values', () => {
+      const result = NumberParser.parse('3 metros e 10')
       expect(result).toBe(310)
     })
 
-    it('should convert param with number and transcription', () => {
-      const result = number.parse('três e 10')
+    it('should convert param with NumberParser and transcription', () => {
+      const result = NumberParser.parse('três e 10')
       expect(result).toBe(310)
     })
   });
 
   describe('Testing decimal numbers', function () {
     it('should convert decimal numbers with comma (,)', () => {
-      const result = number.parse('3,5')
+      const result = NumberParser.parse('3,5')
       expect(result).toBe(3.5)
     })
 
     it('should convert decimal numbers with dot (.)', () => {
-      const result = number.parse('3.5')
+      const result = NumberParser.parse('3.5')
       expect(result).toBe(3.5)
     })
   })

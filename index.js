@@ -66,9 +66,8 @@ class Input {
       input._debounce(() => {
         const value = $(this).val()
         const result = value.trim().split(' por ')
-          .map(v => v.replace(/\D/g, ''))
-          .filter(v => !Number.isNaN(v))
-          .map(v => +v)
+          .map(v => NumberParser.parse(v))
+          .filter(v => v !== null)
         if (result?.length >= 2) fn({length: result[0], width: result[1], height: result[2]})
         input._clear()
       }, 1000)

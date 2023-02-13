@@ -9,4 +9,4 @@ NumberParser = {
   }
 }
 
-if (module?.exports) module.exports = NumberParser
+if (typeof window === 'undefined') module.exports = {NumberParser}
