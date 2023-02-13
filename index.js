@@ -30,7 +30,7 @@ class Board {
 class Table {
   _total = 0
   _boards = []
-  constructor (boards) {
+  constructor (boards = []) {
     if (!Array.isArray(boards)) throw new Error('Table accepts just array as constructor parameter.')
     boards.forEach(b => this.add(b))
   }
@@ -80,14 +80,19 @@ class Input {
   }
 }
 
-const table = new Table([new Board(320, 20)])
+const table = new Table()
 const input = new Input();
 
 input.subscribe((value) => {
   if (!value) return
-  const values = /(\d+) por (\d+)( por ([\d.]+))?/.exec(value)
+  const values = /^(.+?) por (\d+)( por ([\d.]+))?$/.exec(value)
+  let length = values[1].replace(/\D/g, '')
+  console.log(length)
+  if (length.length === 1) {
+    length += '00'
+  }
   if (values !== null) {
-    table.add(new Board(+values[1], values[2], values[4]));
+    table.add(new Board(+length, values[2], values[4]));
   }
   input.clear()
 })
