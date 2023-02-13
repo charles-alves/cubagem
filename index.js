@@ -61,11 +61,16 @@ class Input {
   }
 
   subscribe (fn) {
-    var debounce = this._debounce.bind(this)
+    const input = this
     this._input.on('input', function () {
-      debounce(() => {
-        const result = $(this).val()
-        fn(result)
+      input._debounce(() => {
+        const value = $(this).val()
+        const result = value.trim().split(' por ')
+          .map(v => v.replace(/\D/g, ''))
+          .filter(v => !Number.isNaN(v))
+          .map(v => +v)
+        if (result?.length >= 2) fn({length: result[0], width: result[1], height: result[2]})
+        input._clear()
       }, 1000)
     })
   }
@@ -75,7 +80,7 @@ class Input {
     this._debounceTime = setTimeout(fn, offset)
   }
 
-  clear () {
+  _clear () {
     this._input.val('')
   }
 }
@@ -83,15 +88,9 @@ class Input {
 const table = new Table()
 const input = new Input();
 
-input.subscribe((value) => {
-  if (!value) return
-  const values = /^(.+?) por (\d+)( por ([\d.]+))?$/.exec(value)
-  if (values !== null) {
-    let length = values[1].replace(/\D/g, '')
-    if (length.length === 1) {
-      length += '00'
-    }
-    table.add(new Board(+length, values[2], values[4]));
+input.subscribe(({length, width, height}) => {
+  if (length < 10) {
+    length = length*100
   }
-  input.clear()
+  table.add(new Board(length, width, height));
 })
