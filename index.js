@@ -46,10 +46,13 @@ class Table {
   _createTableRow (board) {
     return $(`<tr class="metric" data-index="${this._boards.length}"><td>${board.length()}</td><td>${board.width()}</td><td>${board.height()}</td></tr>`)
       .click(function () {
-        $(this).toggleClass('table-selected').siblings().removeClass('table-selected');
+        $(this).toggleClass('table-selected').siblings().removeClass('table-selected')
       })
   }
 }
+
+const METRICS_DELIMITER = ' por '
+const QUANTITY_DELIMITER = ' de '
 
 class Input {
 
@@ -58,6 +61,7 @@ class Input {
 
   constructor () {
     this._input = $('#description')
+    this._input.focus()
   }
 
   subscribe (fn) {
@@ -65,20 +69,25 @@ class Input {
     this._input.on('input', function () {
       input._debounce(() => {
         const value = $(this).val()
-        let quantity = 1
-        let description = value
-        if (value.includes(' de ')) {
-          const quantityDescription = value.split(' de ')
-          quantity = NumberParser.parse(quantityDescription[0])
-          description = quantityDescription[1]
-        }
-        const result = description.trim().split(' por ')
-          .map(v => NumberParser.parse(v))
-          .filter(v => v !== null);
+        let {quantity, result} = input._parseValue(value);
         if (result?.length >= 2) Array(quantity).fill({length: result[0], width: result[1], height: result[2]}).forEach(v => fn(v))
         input._clear()
       }, 1000)
     })
+  }
+
+  _parseValue(value) {
+    let quantity = 1
+    let description = value
+    if (value.includes(QUANTITY_DELIMITER)) {
+      const quantityDescription = value.split(QUANTITY_DELIMITER)
+      quantity = NumberParser.parse(quantityDescription[0])
+      description = quantityDescription[1]
+    }
+    const result = description.trim().split(METRICS_DELIMITER)
+      .map(v => NumberParser.parse(v))
+      .filter(v => v !== null);
+    return {quantity, result};
   }
 
   _debounce (fn, offset = 500) {
