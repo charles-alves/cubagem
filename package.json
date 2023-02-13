@@ -6,7 +6,7 @@
   "author": "Charles Alves <charles.siqueira@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest -w"
+    "test": "jest --watch"
   },
   "devDependencies": {
     "jest": "^29.4.2"
