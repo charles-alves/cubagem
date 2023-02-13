@@ -2,7 +2,9 @@ const numbers = {'zero': 0, 'um': 1, 'dois': 2, 'três': 3, 'quatro': 4, 'cinco'
 
 NumberParser = {
   parse (number) {
-    return number.replace(/,/g, '.').split(' ')
+    return number.replace(/,/g, '.')
+      .replace(/:/g, '')
+      .split(' ')
       .map(n => Number.isNaN(+n) ? numbers[n] : +n)
       .filter(n => n !== undefined)
       .reduce((a, v) => a < v ? a*100 + v : a + v, null)

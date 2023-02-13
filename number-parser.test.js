@@ -25,26 +25,31 @@ describe('Testing numbers convertion', function () {
     })
   });
 
-  describe('Testing values that is not NumberParser', function () {
+  describe('Testing values that is not number', function () {
     it('sould return null to non numeric values', () => {
       const result = NumberParser.parse('não é número')
       expect(result).toBeNull()
     })
   })
 
-  describe('Testing meters description to NumberParser', function () {
+  describe('Testing meters description to number', function () {
     it('should convert meters using the letter e to concatenate', () => {
       const result = NumberParser.parse('3 e 30')
       expect(result).toBe(330)
     })
 
-    it('should ignore non numeric NumberParser values', () => {
+    it('should ignore non numeric number values', () => {
       const result = NumberParser.parse('3 metros e 10')
       expect(result).toBe(310)
     })
 
-    it('should convert param with NumberParser and transcription', () => {
+    it('should convert param with number and transcription', () => {
       const result = NumberParser.parse('três e 10')
+      expect(result).toBe(310)
+    })
+
+    it('should convert numbers ignoring colon (:)', () => {
+      const result = NumberParser.parse('3:10')
       expect(result).toBe(310)
     })
   });
