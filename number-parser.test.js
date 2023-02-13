@@ -27,8 +27,37 @@ describe('Testing numbers convertion', function () {
 
   describe('Testing values that is not number', function () {
     it('sould return null to non numeric values', () => {
-      const result = number.parse('não é um número')
+      const result = number.parse('não é número')
       expect(result).toBeNull()
+    })
+  })
+
+  describe('Testing meters description to number', function () {
+    it('should convert meters using the letter e to concatenate', () => {
+      const result = number.parse('3 e 30')
+      expect(result).toBe(330)
+    })
+
+    it('should ignore non numeric number values', () => {
+      const result = number.parse('3 metros e 10')
+      expect(result).toBe(310)
+    })
+
+    it('should convert param with number and transcription', () => {
+      const result = number.parse('três e 10')
+      expect(result).toBe(310)
+    })
+  });
+
+  describe('Testing decimal numbers', function () {
+    it('should convert decimal numbers with comma (,)', () => {
+      const result = number.parse('3,5')
+      expect(result).toBe(3.5)
+    })
+
+    it('should convert decimal numbers with dot (.)', () => {
+      const result = number.parse('3.5')
+      expect(result).toBe(3.5)
     })
   })
 });
