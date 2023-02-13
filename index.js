@@ -65,10 +65,17 @@ class Input {
     this._input.on('input', function () {
       input._debounce(() => {
         const value = $(this).val()
-        const result = value.trim().split(' por ')
+        let quantity = 1
+        let description = value
+        if (value.includes(' de ')) {
+          const quantityDescription = value.split(' de ')
+          quantity = NumberParser.parse(quantityDescription[0])
+          description = quantityDescription[1]
+        }
+        const result = description.trim().split(' por ')
           .map(v => NumberParser.parse(v))
-          .filter(v => v !== null)
-        if (result?.length >= 2) fn({length: result[0], width: result[1], height: result[2]})
+          .filter(v => v !== null);
+        if (result?.length >= 2) Array(quantity).fill({length: result[0], width: result[1], height: result[2]}).forEach(v => fn(v))
         input._clear()
       }, 1000)
     })
