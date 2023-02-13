@@ -7,12 +7,22 @@ describe('Testing numbers convertion', function () {
       expect(result).toBe(5)
     })
 
-    it('should convert the NumberParser fifteen', () => {
+    it('should convert the enumeration one as feminine', () => {
+      const result = NumberParser.parse('uma')
+      expect(result).toBe(1)
+    })
+
+    it('should convert the enumeration two as feminine', () => {
+      const result = NumberParser.parse('duas')
+      expect(result).toBe(2)
+    })
+
+    it('should convert the number fifteen', () => {
       const result = NumberParser.parse('quinze')
       expect(result).toBe(15)
     })
 
-    it('should convert the NumberParser fifty', () => {
+    it('should convert the number fifty', () => {
       const result = NumberParser.parse('cinquenta')
       expect(result).toBe(50)
     })
